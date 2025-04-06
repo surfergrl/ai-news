@@ -7,11 +7,15 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 
-# Configuration
-EMAIL_SENDER = "your_email@gmail.com"
-EMAIL_PASSWORD = "your_app_specific_password"  # Use an app-specific password for Gmail
-RECIPIENTS = ["recipient1@example.com", "recipient2@example.com"]
-SEARCH_QUERY = "AI news today site:*.edu | site:*.org | site:*.gov -inurl:(signup | login)"
+# Configuration details - taken from config.ini to keep them private 
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
+EMAIL_SENDER = config['email']['sender']
+EMAIL_PASSWORD = config['email']['password']
+RECIPIENTS = config['email']['recipients'].split(',')
+
+SEARCH_QUERY = "AI news today site:*.edu | site:*.org | site:*.gov -inurl:(signup | login)" # Currently looks at these domains to give us quality results and avoids sites that need an account to view 
 
 # Initialize summarizer
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
