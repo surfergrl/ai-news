@@ -8,9 +8,13 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 # Configuration details - taken from config.ini to keep them private 
+# Includes error handling in case no config file or email available 
 import configparser
 config = configparser.ConfigParser()
-config.read('config.ini')
+if not config.read('config.ini'):
+    raise FileNotFoundError("config.ini not found or could not be read")
+if 'email' not in config:
+    raise ValueError("No [email] section in config.ini")
 EMAIL_SENDER = config['email']['sender']
 EMAIL_PASSWORD = config['email']['password']
 RECIPIENTS = config['email']['recipients'].split(',')
