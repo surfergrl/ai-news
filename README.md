@@ -7,6 +7,10 @@
 Note to self:
 Environment Variables in Production: If you deploy this (e.g., on a server), set environment variables via your hosting platform’s settings (ie Heroku).
 
+Next steps to make this useful:
+
+- Get it to run at the same time each day automatically
+
 Further development ideas:
 
 - Add a web interface to allow users to add/delete/change the email addresses the news is sent to.

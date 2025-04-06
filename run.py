@@ -5,7 +5,7 @@ from transformers import pipeline
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime
+from datetime import datetimegit 
 
 # Configuration details - taken from config.ini to keep them private 
 # Includes error handling in case no config file or email available 
@@ -67,7 +67,7 @@ def send_email(articles):
     msg['To'] = ", ".join(RECIPIENTS)
     msg['Subject'] = f"Top AI News Articles - {datetime.now().strftime('%Y-%m-%d')}"
 
-    body = "<h2>Today's Top AI News</h2>"
+    body = "<h2>Today's Top AI News from Kat's AI-News-App experiment</h2>"
     for article in articles:
         body += f"""
         <h3>{article['title']}</h3>
@@ -84,7 +84,7 @@ def send_email(articles):
         server.send_message(msg)
 
 def main():
-    print("Fetching today's AI news...")
+    print("Hi Kat! I'm fetching today's AI news...")
     articles = get_top_articles(SEARCH_QUERY)
     if articles:
         print("Sending email...")
