@@ -5,7 +5,7 @@ from transformers import pipeline
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetimegit 
+from datetime import datetime
 
 # Configuration details - taken from config.ini to keep them private 
 # Includes error handling in case no config file or email available 
@@ -18,11 +18,12 @@ if 'email' not in config:
 EMAIL_SENDER = config['email']['sender']
 EMAIL_PASSWORD = config['email']['password']
 RECIPIENTS = config['email']['recipients'].split(',')
-
-SEARCH_QUERY = "AI news today site:*.edu | site:*.org | site:*.gov -inurl:(signup | login)" # Currently looks at these domains to give us quality results and avoids sites that need an account to view 
+# give quality results and no logins req
+SEARCH_QUERY = "AI news today site:*.edu | site:*.org | site:*.gov -inurl:(signup | login)"
 
 # Initialize summarizer
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
 
 def get_top_articles(query, num_results=5):
     articles = []
@@ -60,6 +61,7 @@ def get_top_articles(query, num_results=5):
         except Exception as e:
             print(f"Error processing {url}: {e}")
     return articles
+
 
 def send_email(articles):
     msg = MIMEMultipart()
